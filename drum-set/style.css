@@ -1,0 +1,91 @@
+body {
+    /* background-image: url(assets/drums.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: 1500px; */
+    background-color: rgb(70, 70, 70);
+    user-select: none;
+
+}
+
+.button-container{
+    text-align: center;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+button {
+    font-size: 35px;
+    height: 70px;
+    width: 130px;
+    background-color: rgba(255, 238, 0, 0.082);
+    color: rgb(255, 251, 0);
+
+    position: absolute;
+}
+
+#aCymbal {
+    left: 80px;
+    top: 300px;
+}
+
+#sCymbal {
+    left: 380px;
+    top: 220px;
+}
+
+#dCymbal {
+    left: 660px;
+    top: 250px;
+}
+
+#fCymbal {
+    left: 980px;
+    top: 500px;
+}
+
+#zTom {
+    left: 250px;
+    top: 430px;
+}
+
+#xTom {
+    left: 430px;
+    top: 410px;
+}
+
+#cTom {
+    left: 650px;
+    top: 440px;
+}
+
+#hiHat {
+    left: 100px;
+    top: 620px;
+}
+
+#hiHatSwitch {
+    left: 180px;
+    top: 800px;
+    width: 170px;
+}
+
+#snare {
+    left: 353px;
+    top: 630px;
+}
+
+#base {
+    left: 520px;
+    top: 565px;
+}
+
+#jumbo {
+    left: 660px;
+    top: 665px;
+}
