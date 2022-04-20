@@ -1,0 +1,18 @@
+div{
+    border: 40px grey solid;
+    border-radius: 10%;
+    
+    background-color: black;
+    width: 800px;
+    height: 800px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+img{
+    filter: opacity(0.5) drop-shadow(0 0 0 rgb(255, 0, 0)); 
+    width: 200px;
+    background-position-x:500 ;
+    
+    
+}
