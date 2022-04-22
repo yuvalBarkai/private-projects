@@ -1,0 +1,24 @@
+body{
+    text-align: center;
+    font-size: 34px;
+}
+div{
+    display: flex;
+    flex-wrap: wrap;
+    width: 30%;
+    margin-right: auto;
+    margin-left: auto;
+    justify-content: center;
+}
+button{
+    flex:50%;
+    margin-top: 10px;
+    height: 60px;
+    font-size: 34px;
+}
+input{
+    margin: 10px;
+    font-size: 34px;
+    width: 180px;
+    height: 55px;
+}
