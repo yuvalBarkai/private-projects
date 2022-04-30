@@ -1,0 +1,30 @@
+body{
+    text-align: center;
+    background-color: rgb(178, 204, 46);
+}
+h1{
+    margin-top: 20px;
+}
+div{
+    margin: 20px;
+    font-size: 60px;
+}
+canvas{
+    border:5px black solid; 
+    margin-bottom: 20px;
+}
+
+input{
+    width: 200px;
+    text-align: center;
+    font-size: 25px;
+}
+
+#letterGuess{
+    width: 75px;
+}
+
+button{
+    margin-top: 10px;
+    
+}
