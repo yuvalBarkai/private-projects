@@ -7,9 +7,10 @@ let sixth = document.getElementById("sixth");
 let seventh = document.getElementById("seventh");
 let eight = document.getElementById("eight");
 
-const button = document.getElementsByClassName("btn")
+const button = document.getElementsByClassName("btn");
 let wordGuess = document.getElementById("wordGuess");
 let letterGuess = document.getElementById("letterGuess");
+let error = document.getElementById("errorMsg");
 
 const canvas = document.getElementById("canvas");
 const painter = canvas.getContext("2d");
@@ -17,25 +18,33 @@ painter.lineWidth = 3;
 
 const characters = [first, second, third, fourth, fifth, sixth, seventh, eight];
 
-const word = "shina";
-const guesses = 8;
+const word = "check";
+let userWord=[];
+const guesses = 9;
 let counter = guesses;
 
+const RAD = Math.PI/180;
 //delete previous lines
-/* for(let i = 0; i<=characters.length;i++){
-    characters[i].innerText="";
-} */
+for(let d = 0; d<characters.length;d++){
+    characters[d].innerText="";
+}
 
 //add lines
 for(let i = 0; i<=word.length-1;i++){
     characters[i].innerText="_";
 }
 
-const RAD = Math.PI/180;
-draw(counter);
+draw(counter)
+
+//showcases drawing for testing
+/* for(let t=counter; t>=0;t--){
+    draw(t);
+} */
+
 
 
 function submit(){
+    error.innerText="";
     if(wordGuess.value){ // user entered word guess
         guessingWord();
     }
@@ -43,7 +52,7 @@ function submit(){
         guessingLetter();
     }
     else{ // user submit without entering a value
-        alert("Please enter a value before submiting");
+        error.innerText="Please enter a value before submiting";
         letterGuess.focus();
     }
 }
@@ -68,54 +77,52 @@ function guessingLetter(){
     for(let i = 0; i<=word.length-1;i++){
         if(letterGuess.value==word[i]){
             characters[i].innerText=word[i];
-            break;
         }
     }
-
+    
     letterGuess.value="";
     counter--;
     draw(counter);
     letterGuess.focus();
 }
 
+
 function draw(guess){
     switch(guess){
         
         default://lost
             console.log("lost");
-            painter.beginPath(); //delete
-            painter.clearRect(148,125,65,140);
+            painter.clearRect(0,210,160,50)
 
-            painter.lineWidth = 3;
-            painter.beginPath(); //head
-            painter.arc(98,120,10,0,2*Math.PI);
-            painter.stroke();
-            painter.beginPath(); //body
-            painter.moveTo(98,130);
-            painter.lineTo(98,190);
-            painter.stroke();
-            painter.beginPath(); //right arm
-            painter.moveTo(98,130); 
-            painter.lineTo(128,160);
-            painter.stroke();
-            painter.beginPath();
-            painter.moveTo(98,130); //left arm
-            painter.lineTo(68,160);
-            painter.stroke();
-            painter.beginPath();
-            painter.moveTo(98,190); //right leg
-            painter.lineTo(118,220);
-            painter.stroke();
-            painter.beginPath();
-            painter.moveTo(98,190); //left leg
-            painter.lineTo(68,220);
-            painter.stroke();
-            
             break;
 
         case "won"://win
             console.log("won");
-            
+            painter.clearRect(0,0,300,300);
+            painter.beginPath(); //head
+            painter.arc(180,160,10,0,2*Math.PI);
+            painter.stroke();
+            painter.beginPath(); //body
+            painter.moveTo(180,170);
+            painter.lineTo(180,230);
+            painter.stroke();
+            painter.beginPath(); //right arm
+            painter.moveTo(180,170);
+            painter.lineTo(210,200);
+            painter.stroke();
+            painter.beginPath(); //left arm
+            painter.moveTo(180,170);
+            painter.lineTo(160,200);
+            painter.stroke();
+            painter.beginPath(); //right leg
+            painter.moveTo(180,230);
+            painter.lineTo(200,260);
+            painter.stroke();
+            painter.beginPath(); //left leg
+            painter.moveTo(180,230); 
+            painter.lineTo(160,260);
+            painter.stroke();
+
             break;
 
         case guesses://start screen
@@ -133,7 +140,7 @@ function draw(guess){
             painter.stroke();
             painter.beginPath(); //left arm
             painter.moveTo(180,170);
-            painter.lineTo(150,200);
+            painter.lineTo(160,200);
             painter.stroke();
             painter.beginPath(); //right leg
             painter.moveTo(180,230);
@@ -175,6 +182,37 @@ function draw(guess){
 
         case guesses-3://guess 3
             console.log("guess 3");
+            painter.lineWidth = 5;
+            painter.beginPath(); // first step
+            painter.moveTo(150,260);
+            painter.lineTo(150,240);
+            painter.lineTo(120,240);
+            painter.stroke();
+    
+            break;
+
+        case guesses-4://guess 4
+            console.log("guess 4");
+            painter.beginPath(); // second step
+            painter.moveTo(120,240);
+            painter.lineTo(120,215);
+            painter.lineTo(100,215);
+            painter.stroke();
+
+            break;
+
+        case guesses-5://guess 5
+            console.log("guess 5");
+            painter.beginPath();
+            painter.moveTo(100,215);
+            painter.lineTo(0,215);
+            painter.stroke();
+
+            break;
+
+        case guesses-6://guess 6
+            console.log("guess 6");
+
             painter.lineWidth = 1;
             painter.beginPath(); //rope
             painter.arc(107,112,20,RAD*240,RAD*110,true);
@@ -182,34 +220,71 @@ function draw(guess){
             painter.beginPath(); //rope
             painter.arc(90,112,20,RAD*300,RAD*62);
             painter.stroke();
-            break;
 
-        case guesses-4://guess 4
-            console.log("guess 4");
-            painter.lineWidth = 5;
-            painter.beginPath(); // first step
-            painter.moveTo(150,260);
-            painter.lineTo(150,240);
-            painter.lineTo(120,240);
-            painter.stroke();
-            break;
-
-        case guesses-5://guess 5
-            console.log("guess 5");
-            painter.beginPath(); // second step
-            painter.moveTo(120,240);
-            painter.lineTo(120,215);
-            painter.lineTo(100,215);
-            painter.stroke();
-            break;
-
-        case guesses-6://guess 6
-            console.log("guess 6");
-            
-            break;
+            break;            
 
         case guesses-7://guess 7
             console.log("guess 7");
+            painter.beginPath(); //delete
+            painter.clearRect(155,125,60,140);
+
+            painter.lineWidth = 3;
+            painter.beginPath(); //head
+            painter.arc(140,148,10,0,2*Math.PI);
+            painter.stroke();
+            painter.beginPath(); //body
+            painter.moveTo(140,160);
+            painter.lineTo(140,210);
+            painter.stroke();
+            painter.beginPath(); //right arm
+            painter.moveTo(140,160); 
+            painter.lineTo(155,185);
+            painter.stroke();
+            painter.beginPath();
+            painter.moveTo(140,160); //left arm
+            painter.lineTo(130,190);
+            painter.stroke();
+            painter.beginPath();
+            painter.moveTo(140,210); //right leg
+            painter.lineTo(150,240);
+            painter.stroke();
+            painter.beginPath();
+            painter.moveTo(140,210); //left leg
+            painter.lineTo(130,240);
+            painter.stroke();
+
             break;
+        
+        case guesses-8://guess 8
+        console.log("guess 8");
+        painter.beginPath(); //delete
+        painter.clearRect(127,135,44,103);
+
+        painter.lineWidth = 3;
+        painter.beginPath(); //head
+        painter.arc(98,120,10,0,2*Math.PI);
+        painter.stroke();
+        painter.beginPath(); //body
+        painter.moveTo(98,130);
+        painter.lineTo(98,190);
+        painter.stroke();
+        painter.beginPath(); //right arm
+        painter.moveTo(98,130); 
+        painter.lineTo(128,160);
+        painter.stroke();
+        painter.beginPath();
+        painter.moveTo(98,130); //left arm
+        painter.lineTo(68,160);
+        painter.stroke();
+        painter.beginPath();
+        painter.moveTo(98,190); //right leg
+        painter.lineTo(125,215);
+        painter.stroke();
+        painter.beginPath();
+        painter.moveTo(98,190); //left leg
+        painter.lineTo(60,215);
+        painter.stroke();
+
+        break;
     }
 }

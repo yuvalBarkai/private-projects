@@ -18,13 +18,21 @@ input{
     width: 200px;
     text-align: center;
     font-size: 25px;
+    background-color: rgba(0,0,0,50%);
+    color: white;
+    
+}
+::placeholder{
+    color: rgb(191, 191, 191);
 }
 
 #letterGuess{
     width: 75px;
 }
-
+#errorMsg{
+    font-size: 20px;
+    color: rgb(190, 9, 9);
+}
 button{
     margin-top: 10px;
-    
 }
