@@ -21,7 +21,7 @@ const painter = canvas.getContext("2d");
 
 const characters = [first, second, third, fourth, fifth, sixth, seventh, eight, ninth, tenth];
 
-const word = "difficult";
+const word = "voodoo";  // up to 10 characters
 
 let userWord=word;
 const guesses = 9;
@@ -38,14 +38,23 @@ for(let i = 0; i<=word.length-1;i++){
     characters[i].innerText="_";
 }
 
-//showcases drawing for testing
-/* for(let t=counter; t>=0;t--){
-    draw(t);
-}
-draw("won") */
-
 
 draw(counter);
+letterGuess.focus();
+
+// presses button if enter is pressed
+letterGuess.addEventListener("keypress", function(event) { 
+    if (event.key === "Enter") {
+      event.preventDefault();
+      button.click();
+    }
+});
+wordGuess.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      button.click();
+    }
+});
 
 function submit(){
     error.innerText="";
@@ -94,15 +103,51 @@ function guessingLetter(){
     }
 }
 
+//showcases drawing for testing
+/* for(let t=counter; t>=0;t--){
+    draw(t);
+} */
+// draw("won")
 
 function draw(guess){
     switch(guess){
         
         default://lost
             console.log("lost");
-            painter.clearRect(0,210,160,50)
+            painter.clearRect(0,210,160,50);
+            let tmp = 130;
+            let myInterval = setInterval(()=>{
+                painter.strokeStyle = "red"
+                painter.beginPath();
+                painter.moveTo(96,tmp);
+                painter.lineTo(96,tmp+5);
+                painter.stroke();
+                tmp = tmp + 6;
+                if(tmp>170){
+                    clearInterval(myInterval)
+                    painter.beginPath(); // text bubble
+                    painter.strokeStyle = "black";
+                    painter.lineWidth = 2;
+                    painter.moveTo(102,125);
+                    painter.lineTo(120,80);
+                    painter.lineTo(220,80);
+                    painter.lineTo(220,115);
+                    painter.lineTo(120,115);
+                    painter.lineTo(102,125);
+                    painter.stroke();
+                    painter.beginPath(); 
+                    painter.font = "15px Arial"
+                    painter.fillStyle = "rgb(193,0,0)"
+                    painter.fillText("Your stupidity",125,95,105);
+                    painter.fillText("killed me",126,110,105);
+                    painter.font = "35px Arial"
+                    painter.fillStyle="purple"
+                    painter.fillText(`The word was ''${word}''`,10,295,280)
+                }
+                    
+            },400)
+
             button.disabled=true;
-            
             break;
 
         case "won"://win
