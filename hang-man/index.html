@@ -10,7 +10,8 @@
 </head>
 <body>
     <h1>Hang Man Game</h1>
-    <div>
+    <div id="guessesLeft"></div>
+    <div id="blanks">
         <span id="first"></span>
         <span id="second"></span>
         <span id="third"></span>
@@ -19,6 +20,8 @@
         <span id="sixth"></span>
         <span id="seventh"></span>
         <span id="eight"></span>
+        <span id="ninth"></span>
+        <span id="tenth"></span>
     </div>
 
     <canvas id="canvas" width="300" height="300">
@@ -27,7 +30,7 @@
     <input type="text" id="letterGuess" placeholder="Letter" maxlength="1">
     <input type="text" id="wordGuess" placeholder="Word Guess"> <br>
     <div id="errorMsg"></div>
-    <button class="btn btn-dark" onclick="submit()">Submit</button>
+    <button class="btn btn-dark" id="button" onclick="submit()">Submit</button>
     
     <script src="script.js"></script>
 </body>

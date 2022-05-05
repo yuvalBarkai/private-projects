@@ -6,20 +6,24 @@ let fifth = document.getElementById("fifth");
 let sixth = document.getElementById("sixth");
 let seventh = document.getElementById("seventh");
 let eight = document.getElementById("eight");
+let ninth = document.getElementById("ninth");
+let tenth = document.getElementById("tenth");
 
-const button = document.getElementsByClassName("btn");
+
+const guessesLeft = document.getElementById("guessesLeft");
+const button = document.getElementById("button");
 let wordGuess = document.getElementById("wordGuess");
 let letterGuess = document.getElementById("letterGuess");
 let error = document.getElementById("errorMsg");
 
 const canvas = document.getElementById("canvas");
 const painter = canvas.getContext("2d");
-painter.lineWidth = 3;
 
-const characters = [first, second, third, fourth, fifth, sixth, seventh, eight];
+const characters = [first, second, third, fourth, fifth, sixth, seventh, eight, ninth, tenth];
 
-const word = "check";
-let userWord=[];
+const word = "difficult";
+
+let userWord=word;
 const guesses = 9;
 let counter = guesses;
 
@@ -34,14 +38,14 @@ for(let i = 0; i<=word.length-1;i++){
     characters[i].innerText="_";
 }
 
-draw(counter)
-
 //showcases drawing for testing
 /* for(let t=counter; t>=0;t--){
     draw(t);
-} */
+}
+draw("won") */
 
 
+draw(counter);
 
 function submit(){
     error.innerText="";
@@ -55,12 +59,12 @@ function submit(){
         error.innerText="Please enter a value before submiting";
         letterGuess.focus();
     }
+    guessesLeft.innerText=counter;
 }
 
 function guessingWord(){
     if(wordGuess.value==word){
         draw("won");
-        button.disabled=true;
         for(let i = 0; i<=word.length-1;i++){
             characters[i].innerText=word[i];
         }
@@ -77,13 +81,17 @@ function guessingLetter(){
     for(let i = 0; i<=word.length-1;i++){
         if(letterGuess.value==word[i]){
             characters[i].innerText=word[i];
+            userWord=userWord.replace(word[i],"")
         }
     }
-    
     letterGuess.value="";
     counter--;
-    draw(counter);
-    letterGuess.focus();
+    if(userWord=="")
+        draw("won");
+    else{
+        draw(counter);
+        letterGuess.focus();
+    }
 }
 
 
@@ -93,14 +101,29 @@ function draw(guess){
         default://lost
             console.log("lost");
             painter.clearRect(0,210,160,50)
-
+            button.disabled=true;
+            
             break;
 
         case "won"://win
             console.log("won");
             painter.clearRect(0,0,300,300);
             painter.beginPath(); //head
-            painter.arc(180,160,10,0,2*Math.PI);
+            painter.arc(180,120,50,0,2*Math.PI);
+            painter.stroke();
+            painter.beginPath(); // mouth
+            painter.arc(180,120,35,30*RAD,150*RAD)
+            painter.stroke();
+            painter.beginPath(); // left eye
+            painter.arc(160,105,10,0,2*Math.PI)
+            painter.stroke();
+            painter.beginPath(); // right eye
+            painter.arc(200,105,10,0,2*Math.PI)
+            painter.stroke();
+            painter.beginPath(); // nose
+            painter.moveTo(180,115);
+            painter.lineTo(175,130);
+            painter.lineTo(185,128);
             painter.stroke();
             painter.beginPath(); //body
             painter.moveTo(180,170);
@@ -122,11 +145,12 @@ function draw(guess){
             painter.moveTo(180,230); 
             painter.lineTo(160,260);
             painter.stroke();
-
+            button.disabled=true;
             break;
 
         case guesses://start screen
             console.log("starting screen");
+            painter.lineWidth = 3;
             painter.beginPath(); //head
             painter.arc(180,160,10,0,2*Math.PI);
             painter.stroke();
