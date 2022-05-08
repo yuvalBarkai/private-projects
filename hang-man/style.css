@@ -39,3 +39,6 @@ input{
 button{
     margin-top: 10px;
 }
+#usedWords{
+    font-size: 25px;
+}

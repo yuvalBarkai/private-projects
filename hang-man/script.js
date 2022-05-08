@@ -15,13 +15,14 @@ const button = document.getElementById("button");
 let wordGuess = document.getElementById("wordGuess");
 let letterGuess = document.getElementById("letterGuess");
 let error = document.getElementById("errorMsg");
+let usedWords = document.getElementById("usedWords");
 
 const canvas = document.getElementById("canvas");
 const painter = canvas.getContext("2d");
 
 const characters = [first, second, third, fourth, fifth, sixth, seventh, eight, ninth, tenth];
 
-const word = "voodoo";  // up to 10 characters
+const word = "problem";  // up to 10 characters
 
 let userWord=word;
 const guesses = 9;
@@ -87,14 +88,21 @@ function guessingWord(){
 }
 
 function guessingLetter(){
+    let correctLetter = false;
+
     for(let i = 0; i<=word.length-1;i++){
         if(letterGuess.value==word[i]){
             characters[i].innerText=word[i];
-            userWord=userWord.replace(word[i],"")
+            userWord=userWord.replace(word[i],"");
+            correctLetter=true;
         }
     }
+    if(!correctLetter){
+        counter--; 
+        usedWords.innerText += ` ${letterGuess.value}`;
+    }
+
     letterGuess.value="";
-    counter--;
     if(userWord=="")
         draw("won");
     else{
