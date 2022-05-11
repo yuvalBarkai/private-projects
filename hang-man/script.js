@@ -11,51 +11,80 @@ let tenth = document.getElementById("tenth");
 
 
 const guessesLeft = document.getElementById("guessesLeft");
-const button = document.getElementById("button");
+const submitButton = document.getElementById("submitButton");
 let wordGuess = document.getElementById("wordGuess");
 let letterGuess = document.getElementById("letterGuess");
 let error = document.getElementById("errorMsg");
-let usedWords = document.getElementById("usedWords");
+let usedLetters = document.getElementById("usedLetters");
 
 const canvas = document.getElementById("canvas");
 const painter = canvas.getContext("2d");
 
 const characters = [first, second, third, fourth, fifth, sixth, seventh, eight, ninth, tenth];
 
-const word = "problem";  // up to 10 characters
+let wordList = ["problem","difficult","mistake","test"]; // up to 10 characters
 
-let userWord=word;
+let word = "";
+
+let remainingLetters="";
 const guesses = 9;
 let counter = guesses;
 
 const RAD = Math.PI/180;
-//delete previous lines
-for(let d = 0; d<characters.length;d++){
-    characters[d].innerText="";
-}
+let wordSelected="";
 
-//add lines
-for(let i = 0; i<=word.length-1;i++){
-    characters[i].innerText="_";
-}
+newGame();
 
-
-draw(counter);
-letterGuess.focus();
-
-// presses button if enter is pressed
+// presses submitButton if enter is pressed
 letterGuess.addEventListener("keypress", function(event) { 
     if (event.key === "Enter") {
       event.preventDefault();
-      button.click();
+      submitButton.click();
     }
 });
 wordGuess.addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
       event.preventDefault();
-      button.click();
+      submitButton.click();
     }
 });
+
+function newGame(){
+    if(wordList.length==0){
+        draw("clear");
+        draw("end");
+        submitButton.disabled=true;
+    }
+    else{
+        word = takeWord(wordList);
+        remainingLetters = word;
+        
+        for(let d = 0; d<characters.length;d++){ //delete previous lines
+            characters[d].innerText="";
+        }
+        for(let i = 0; i<=word.length-1;i++){ //add lines
+            characters[i].innerText="_";
+        }
+
+        counter=guesses;
+        draw("clear");
+        draw(counter);
+        letterGuess.focus();
+        usedLetters.innerText="";
+        wordGuess.value="";
+        submitButton.disabled=false;
+        guessesLeft.innerText=counter;
+    }   
+}
+
+function takeWord(list){ // takes a word from a list while removing it from the list    
+    let index = Math.floor(Math.random()*list.length);
+
+    wordSelected = list[index];
+    list.splice(index,1);
+
+    return wordSelected;
+}
 
 function submit(){
     error.innerText="";
@@ -73,7 +102,7 @@ function submit(){
 }
 
 function guessingWord(){
-    if(wordGuess.value==word){
+    if(wordGuess.value.toLowerCase()==word){
         draw("won");
         for(let i = 0; i<=word.length-1;i++){
             characters[i].innerText=word[i];
@@ -91,19 +120,23 @@ function guessingLetter(){
     let correctLetter = false;
 
     for(let i = 0; i<=word.length-1;i++){
-        if(letterGuess.value==word[i]){
-            characters[i].innerText=word[i];
-            userWord=userWord.replace(word[i],"");
+        if(letterGuess.value.toLowerCase()==word[i]){
+            if(letterGuess.value.toLowerCase()==remainingLetters[i]){
+                characters[i].innerText=word[i];
+                remainingLetters=remainingLetters.replace(word[i],"0");
+            }
+            else
+                error.innerText = "Already used word";
             correctLetter=true;
         }
     }
     if(!correctLetter){
         counter--; 
-        usedWords.innerText += ` ${letterGuess.value}`;
+        usedLetters.innerText += ` ${letterGuess.value}`;
     }
 
     letterGuess.value="";
-    if(userWord=="")
+    if(remainingLetters==(word.length-1)*"0")
         draw("won");
     else{
         draw(counter);
@@ -155,9 +188,19 @@ function draw(guess){
                     
             },400)
 
-            button.disabled=true;
+            submitButton.disabled=true;
             break;
 
+        case "end":
+            painter.font = "50px arial"
+            painter.fillText("Game Over",20,150);
+            break;
+
+        case "clear":
+            painter.clearRect(0,0,canvas.width,canvas.height);
+
+            break;
+            
         case "won"://win
             console.log("won");
             painter.clearRect(0,0,300,300);
@@ -198,7 +241,7 @@ function draw(guess){
             painter.moveTo(180,230); 
             painter.lineTo(160,260);
             painter.stroke();
-            button.disabled=true;
+            submitButton.disabled=true;
             break;
 
         case guesses://start screen
