@@ -22,7 +22,7 @@ const painter = canvas.getContext("2d");
 
 const characters = [first, second, third, fourth, fifth, sixth, seventh, eight, ninth, tenth];
 
-let wordList = ["problem","difficult","mistake","test"]; // up to 10 characters
+let wordList = ["blue","luck","voodoo","galaxy","computer","password","sleep"]; // up to 10 characters
 
 let word = "";
 
@@ -116,23 +116,34 @@ function guessingWord(){
     }
 }
 
+let usedLetterValidation = [",",];
 function guessingLetter(){
     let correctLetter = false;
-
+    let alreadyUsed = false;
     for(let i = 0; i<=word.length-1;i++){
         if(letterGuess.value.toLowerCase()==word[i]){
-            if(letterGuess.value.toLowerCase()==remainingLetters[i]){
+            correctLetter=true; 
+
+            if(letterGuess.value.toLowerCase()==remainingLetters[i]){ // Validation it wasnt used before
                 characters[i].innerText=word[i];
                 remainingLetters=remainingLetters.replace(word[i],"0");
             }
             else
-                error.innerText = "Already used word";
-            correctLetter=true;
+                error.innerText = "Already used word";  
         }
-    }
+    }   
     if(!correctLetter){
-        counter--; 
-        usedLetters.innerText += ` ${letterGuess.value}`;
+        for(let l = 0;l<usedLetterValidation.length;l++){
+            if(letterGuess.value.toLowerCase()==usedLetterValidation[l])
+                alreadyUsed = true;
+        }
+        if(alreadyUsed)
+            error.innerText = "Already tried that";
+        else{
+            usedLetters.innerText += ` ${letterGuess.value.toLowerCase()}`;
+            usedLetterValidation.push(letterGuess.value.toLowerCase());
+            counter--;
+        }
     }
 
     letterGuess.value="";

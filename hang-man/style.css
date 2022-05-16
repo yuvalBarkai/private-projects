@@ -10,13 +10,21 @@ h1{
 }
 div{
     margin: 15px;
-    font-size: 60px;
+    font-size: 50px;
+}
+.grid-container{
+    width: 500px;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    justify-content:center;
+    align-content: center;
+    margin-right: auto;
+    margin-left: auto;
 }
 canvas{
     border:5px black solid; 
     margin-bottom: 20px;
 }
-
 input{
     width: 200px;
     text-align: center;
